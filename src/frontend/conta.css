@@ -1,0 +1,579 @@
+/* ==========================================================================
+   DevUp - User Account / Profile Page Stylesheet (conta.css)
+   Pixel-Perfect Implementation of ContaUserW.png
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --font-primary: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --color-blue-primary: #1c68d8;
+  --color-blue-accent: #2563eb;
+  --color-black: #000000;
+  --color-text-main: #111827;
+  --color-text-muted: #6b7280;
+  --color-text-subtle: #9ca3af;
+  --color-border: #e5e7eb;
+  --color-bg: #ffffff;
+  --cover-height: 200px;
+}
+
+html {
+  font-family: var(--font-primary);
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ==========================================================================
+   NAVBAR (same as cliente.html)
+   ========================================================================== */
+.client-navbar {
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  border-bottom: 1px solid #f0f2f5;
+  height: 74px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.nav-logo-img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+.search-wrapper {
+  flex: 1;
+  max-width: 440px;
+  margin: 0 24px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 9999px;
+  padding: 8px 18px;
+  transition: all 0.2s ease;
+}
+
+.search-box:focus-within {
+  border-color: var(--color-blue-accent);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.search-icon {
+  width: 16px;
+  height: 16px;
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+.search-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13px;
+  font-family: inherit;
+  color: #111827;
+  width: 100%;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav-item {
+  color: #111827;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-item:hover {
+  color: var(--color-blue-primary);
+}
+
+.avatar-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+
+.avatar-circle:hover {
+  border-color: var(--color-blue-primary);
+  color: var(--color-blue-primary);
+}
+
+.menu-toggle-btn {
+  background: none;
+  border: none;
+  color: #111827;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+/* ==========================================================================
+   COVER BANNER
+   ========================================================================== */
+.profile-cover {
+  width: 100%;
+  height: var(--cover-height);
+  background: #0a0a2e url('profile_cover.png') center center / cover no-repeat;
+  position: relative;
+}
+
+/* ==========================================================================
+   PROFILE SECTION
+   ========================================================================== */
+.profile-body {
+  background: #ffffff;
+  padding-bottom: 64px;
+}
+
+.profile-header-wrapper {
+  position: relative;
+  padding-top: 0;
+}
+
+.profile-avatar-area {
+  padding: 0 28px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.profile-avatar {
+  width: 135px;
+  height: 135px;
+  border-radius: 18px;
+  background: #dbeafe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--color-blue-accent);
+  border: 5px solid #ffffff;
+  margin-top: -60px;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  letter-spacing: -1px;
+}
+
+.profile-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 8px;
+}
+
+.btn-edit-profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  color: #111827;
+  border: 1.5px solid #d1d5db;
+  border-radius: 9px;
+  padding: 9px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-edit-profile:hover {
+  border-color: var(--color-blue-accent);
+  color: var(--color-blue-accent);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+}
+
+.btn-settings {
+  width: 42px;
+  height: 42px;
+  border-radius: 9px;
+  border: 1.5px solid #d1d5db;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-settings:hover {
+  border-color: var(--color-blue-accent);
+  color: var(--color-blue-accent);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+}
+
+/* ==========================================================================
+   PROFILE INFO BLOCK
+   ========================================================================== */
+.profile-info {
+  padding: 20px 28px 0;
+}
+
+.profile-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.4px;
+  margin-bottom: 4px;
+}
+
+.profile-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-bottom: 14px;
+}
+
+.profile-meta .dot {
+  color: #d1d5db;
+}
+
+/* Verification & Indicated Badges */
+.badges-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.badge-verificado {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #eff6ff;
+  color: var(--color-blue-accent);
+  border-radius: 9999px;
+  padding: 4px 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.badge-indicado {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #fefce8;
+  color: #b45309;
+  border: 1px solid #fde68a;
+  border-radius: 9999px;
+  padding: 4px 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.badge-star {
+  color: #f59e0b;
+}
+
+/* Bio Text */
+.profile-bio {
+  font-size: 14.5px;
+  color: #374151;
+  line-height: 1.65;
+  max-width: 580px;
+  margin-bottom: 20px;
+}
+
+/* Links Row */
+.profile-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.profile-link-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  color: #374151;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.profile-link-item:hover {
+  color: var(--color-blue-accent);
+  text-decoration: underline;
+}
+
+.link-icon {
+  width: 15px;
+  height: 15px;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+/* Member Since */
+.profile-since {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  color: #6b7280;
+  margin-bottom: 22px;
+}
+
+/* Skills Tags Row */
+.skills-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.skill-tag {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 5px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.skill-tag:hover {
+  border-color: var(--color-blue-accent);
+  color: var(--color-blue-accent);
+  background: #eff6ff;
+}
+
+/* ==========================================================================
+   DIVIDER
+   ========================================================================== */
+.profile-divider {
+  height: 1px;
+  background: #f0f2f5;
+  margin: 32px 0;
+}
+
+/* ==========================================================================
+   FOOTER (Same Dark Design)
+   ========================================================================== */
+.site-footer {
+  background: #000000;
+  color: #ffffff;
+  padding: 60px 0 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.footer-brand {
+  font-size: 26px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.footer-tagline {
+  font-size: 13.5px;
+  font-weight: 300;
+  color: #9ca3af;
+  line-height: 1.5;
+}
+
+.col-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #2563eb;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-links a {
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 13.5px;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #ffffff;
+}
+
+.social-icons {
+  display: flex;
+  gap: 12px;
+}
+
+.social-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.social-circle:hover {
+  border-color: #2563eb;
+  color: #2563eb;
+  transform: translateY(-2px);
+}
+
+.footer-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 24px;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #71717a;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.legal-links {
+  display: flex;
+  gap: 20px;
+}
+
+.legal-links a {
+  color: #71717a;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.legal-links a:hover {
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 768px) {
+  :root {
+    --cover-height: 140px;
+  }
+
+  .search-wrapper {
+    display: none;
+  }
+
+  .nav-item {
+    display: none;
+  }
+
+  .profile-avatar {
+    width: 96px;
+    height: 96px;
+    font-size: 30px;
+    margin-top: -40px;
+  }
+
+  .profile-name {
+    font-size: 22px;
+  }
+
+  .profile-meta {
+    flex-wrap: wrap;
+  }
+
+  .profile-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .btn-edit-profile {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}

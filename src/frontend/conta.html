@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carlos Melo - Conta DevUp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="conta.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       NAVBAR (Mesma da cliente.html)
+       ========================================================================== -->
+  <header class="client-navbar">
+    <div class="container nav-inner">
+      <a href="cliente.html" class="nav-brand" aria-label="DevUp Marketplace">
+        <img src="logo.png" alt="DevUp" class="nav-logo-img">
+      </a>
+
+      <div class="search-wrapper">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" class="search-input" placeholder="Pesquise por Anúncio, Usuário ou Categoria">
+        </div>
+      </div>
+
+      <nav class="nav-actions">
+        <a href="cliente.html#categorias" class="nav-item">Categorias</a>
+        <a href="#" class="nav-item">Blog</a>
+        <a href="conta.html" class="avatar-circle" aria-label="Minha Conta">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+        <button class="menu-toggle-btn" aria-label="Abrir menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       COVER BANNER (Dark blue wave from ContaUserW.png)
+       ========================================================================== -->
+  <div class="profile-cover" role="img"></div>
+
+  <!-- ==========================================================================
+       PROFILE BODY
+       ========================================================================== -->
+  <div class="profile-body">
+
+    <!-- Avatar + Action Buttons -->
+    <div class="profile-header-wrapper">
+      <div class="profile-avatar-area container">
+        <!-- Avatar Quadrado com Iniciais -->
+        <div class="profile-avatar" aria-label="Avatar de Carlos Melo">
+          CM
+        </div>
+
+        <!-- Botões: Editar Perfil + Configurações -->
+        <div class="profile-actions">
+          <a href="#" class="btn-edit-profile" id="btn-editar-perfil">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+            </svg>
+            Editar Perfil
+          </a>
+          <a href="#" class="btn-settings" aria-label="Configurações" id="btn-configuracoes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         PROFILE INFO
+         ========================================================================== -->
+    <div class="profile-info container">
+
+      <!-- Nome -->
+      <h1 class="profile-name">Carlos Melo</h1>
+
+      <!-- Username + Localização -->
+      <div class="profile-meta">
+        <span>@carlosmelo1243</span>
+        <span class="dot">·</span>
+        <span>São Paulo, Brasil</span>
+      </div>
+
+      <!-- Selos: Verificado + Indicado -->
+      <div class="badges-row">
+        <span class="badge-verificado">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Verificado
+        </span>
+        <span class="badge-indicado">
+          <span class="badge-star">&#9733;</span>
+          Indicado
+        </span>
+      </div>
+
+      <!-- Bio -->
+      <p class="profile-bio">
+        Desenvolvedor Fullstack apaixonado por criar soluções elegantes. Especialista em Java, Spring Boot e React. Mais de 5 anos de experiência construindo produtos do zero.
+      </p>
+
+      <!-- Links -->
+      <div class="profile-links">
+        <a href="https://carlosmelo.com.br" class="profile-link-item" target="_blank" rel="noopener noreferrer">
+          <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+          carlosmelo.com.br
+        </a>
+        <a href="https://github.com/carlosml" class="profile-link-item" target="_blank" rel="noopener noreferrer">
+          <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+          </svg>
+          github/carlosml
+        </a>
+        <a href="https://carlosmelo.com.br" class="profile-link-item" target="_blank" rel="noopener noreferrer">
+          <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+          </svg>
+          carlosmelo.com.br
+        </a>
+      </div>
+
+      <!-- Membro desde -->
+      <p class="profile-since">
+        <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+          <line x1="16" x2="16" y1="2" y2="6"/>
+          <line x1="8" x2="8" y1="2" y2="6"/>
+          <line x1="3" x2="21" y1="10" y2="10"/>
+        </svg>
+        Membro desde Abril 2026
+      </p>
+
+      <!-- Skills Tags -->
+      <div class="skills-row" role="list" aria-label="Tecnologias dominadas">
+        <span class="skill-tag" role="listitem">GCP</span>
+        <span class="skill-tag" role="listitem">Spring</span>
+        <span class="skill-tag" role="listitem">React</span>
+        <span class="skill-tag" role="listitem">AWS</span>
+        <span class="skill-tag" role="listitem">Docker</span>
+      </div>
+
+      <div class="profile-divider"></div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FOOTER (Mesmo Rodapé do Site)
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="brand-col">
+          <h3 class="footer-brand">DevUp</h3>
+          <p class="footer-tagline">Uma plataforma onde sonhos se tornam reais.</p>
+        </div>
+
+        <div class="links-col">
+          <h4 class="col-title">HOME</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#hero">Inicio</a></li>
+            <li><a href="index.html#feito">Caracteristicas</a></li>
+            <li><a href="index.html#plataforma">Sobre</a></li>
+            <li><a href="index.html#seguranca">Segurança</a></li>
+          </ul>
+        </div>
+
+        <div class="social-col">
+          <h4 class="col-title">SOCIAL</h4>
+          <div class="social-icons">
+            <a href="mailto:contato@devup.com" class="social-circle" aria-label="Email">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="16" x="2" y="4" rx="2"/>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+            </a>
+            <a href="#" class="social-circle" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+              </svg>
+            </a>
+            <a href="#" class="social-circle" aria-label="WhatsApp">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-divider"></div>
+
+      <div class="footer-bottom">
+        <p>© 2026 DevUp. All rights reserved.</p>
+        <div class="legal-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
