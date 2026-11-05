@@ -1,4 +1,4 @@
-const nomesObrigatorios = ['PORT', 'DB_HOST', 'DB_PORT', 'DB_USER', 'DB_NAME'];
+const nomesObrigatorios = ['DATABASE_URL', 'PORT', 'JWT_SECRET', 'CORS_ORIGENS'];
 // DB_PASS: Deixaremos de fora, pois ele não aceitará senha vazia(""), que é o padrão do XAMPP, por exemplo
 
 export function carregarAmbiente(arquivoDeConfiguracao) {
@@ -20,19 +20,19 @@ export function carregarAmbiente(arquivoDeConfiguracao) {
   }
 
   return {
-    nomeAluno: process.env.NOME_ALUNO,
-    turma: process.env.TURMA,
+    banco: process.env.DATABASE_URL,
     porta: process.env.PORT,
-    ambiente: process.env.NODE_ENV || 'development'
+    token: process.env.JWT_SECRET,
+    portas: process.env.CORS_ORIGENS
   };
 }
 
 export function exibirDiagnostico(configuracao) {
   console.table({
-    estudante: configuracao.nomeAluno,
-    turma: configuracao.turma,
-    projeto: 'api-produtos',
-    ambiente: configuracao.ambiente,
+    banco: process.env.DATABASE_URL,
+    token: process.env.JWT_SECRET,
+    portas: process.env.CORS_ORIGENS,
+    projeto: 'devup',
     node: process.version,
     sistema: `${process.platform} ${process.arch}`,
     diretorio: process.cwd(),
