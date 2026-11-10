@@ -5,3 +5,8 @@ export const authRouter = express.Router();
 
 authRouter.post('/registrar', AuthController.registrar);
 authRouter.post('/login', AuthController.login);
+
+// TESTE COM EMAIL: 
+
+// // email: mariana.costa@dev.com
+// senha: minhasenha123

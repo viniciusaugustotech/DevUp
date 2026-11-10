@@ -2,6 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import { resolve } from 'node:path';
+import { criarPool } from './config/database.js';
 
 import { produtoRouter, configurarSegurancaProdutos } from './routes/ProdutoRoutes.js';
 import { authRouter } from './routes/AuthRoutes.js';
@@ -35,7 +36,19 @@ configurarSegurancaProdutos(autenticar, autorizarAdmin);
 
 // 3. Rotas da API
 app.get('/api/check', (_req, res) => res.status(200).json({ status: 'ok' }));
-app.use('/auth/login', authRouter);
+
+app.get('/banco', async (req, res) => {
+  try {
+    const pool = criarPool(); 
+    const resultado = await pool.query('SELECT NOW()');
+    res.json({ banco: 'Conectado com SQL Puro!', horario: resultado.rows[0] });
+  } catch (erro) {
+    res.status(500).json({ banco: 'Erro ao conectar', detalhes: erro.message, ondeFoiOErro: erro.stack });
+  }
+});
+
+
+app.use('/auth', authRouter);
 app.use('/api/produtos', produtoRouter);
 
 // 4. Fallback 404
