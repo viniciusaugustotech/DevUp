@@ -1,4 +1,5 @@
 const nomesObrigatorios = ['DB_USER', 'DB_PASS', 'DB_HOST', 'DB_PORT', 'DB_NAME', 'PORT', 'JWT_SECRET', 'CORS_ORIGENS'];
+
 // DB_PASS: Deixaremos de fora, pois ele não aceitará senha vazia(""), que é o padrão do XAMPP, por exemplo
 
 export function carregarAmbiente(arquivoDeConfiguracao) {

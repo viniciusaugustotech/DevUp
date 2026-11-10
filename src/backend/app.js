@@ -37,16 +37,24 @@ configurarSegurancaProdutos(autenticar, autorizarAdmin);
 // 3. Rotas da API
 app.get('/api/check', (_req, res) => res.status(200).json({ status: 'ok' }));
 
+
 app.get('/banco', async (req, res) => {
   try {
-    const pool = criarPool(); 
-    const resultado = await pool.query('SELECT NOW()');
-    res.json({ banco: 'Conectado com SQL Puro!', horario: resultado.rows[0] });
+    const resultado = await sql`SELECT NOW() as horario`;
+    res.json({ banco: 'Conectado com postgres.js com sucesso!', dados: resultado });
   } catch (erro) {
-    res.status(500).json({ banco: 'Erro ao conectar', detalhes: erro.message, ondeFoiOErro: erro.stack });
+    // Exibe o erro completo no terminal do VS Code
+    console.error('ERRO BRUTO DO BANCO:', erro);
+
+    // Devolve o objeto inteiro convertido em texto para vermos no Insomnia
+    res.status(500).json({ 
+      banco: 'Erro ao conectar', 
+      detalhes: erro.message || 'Sem mensagem curta',
+      erroCompleto: String(erro),
+      ondeFoi: erro.stack 
+    });
   }
 });
-
 
 app.use('/auth', authRouter);
 app.use('/api/produtos', produtoRouter);
