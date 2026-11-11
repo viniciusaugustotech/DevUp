@@ -1,11 +1,13 @@
+
 import pg from 'pg';
 
 export function criarPool() {
-  const senhaCodificada = encodeURIComponent(process.env.DB_PASS || '');
-  const urlConexao = `postgresql://${process.env.DB_USER}:${senhaCodificada}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}?pgbouncer=true`;
-
   return new pg.Pool({
-    connectionString: urlConexao,
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    database: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
     ssl: {
       rejectUnauthorized: false
     }

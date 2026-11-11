@@ -8,6 +8,7 @@ import { produtoRouter, configurarSegurancaProdutos } from './routes/ProdutoRout
 import { authRouter } from './routes/AuthRoutes.js';
 import { autenticar, autorizarAdmin } from './middlewares/AuthMiddleware.js';
 
+const sql = criarPool();
 export const app = express();
 
 // 1. Defesas de Borda: Helmet e CORS
@@ -38,20 +39,21 @@ configurarSegurancaProdutos(autenticar, autorizarAdmin);
 app.get('/api/check', (_req, res) => res.status(200).json({ status: 'ok' }));
 
 
-app.get('/banco', async (req, res) => {
+app.get('/teste-banco', async (req, res) => {
   try {
-    const resultado = await sql`SELECT NOW() as horario`;
-    res.json({ banco: 'Conectado com postgres.js com sucesso!', dados: resultado });
-  } catch (erro) {
-    // Exibe o erro completo no terminal do VS Code
-    console.error('ERRO BRUTO DO BANCO:', erro);
+    const resultado = await sql.query('SELECT NOW()');
 
-    // Devolve o objeto inteiro convertido em texto para vermos no Insomnia
-    res.status(500).json({ 
-      banco: 'Erro ao conectar', 
-      detalhes: erro.message || 'Sem mensagem curta',
-      erroCompleto: String(erro),
-      ondeFoi: erro.stack 
+    res.json({
+      banco: 'Conectado com sucesso!',
+      horario: resultado.rows[0].now
+    });
+
+  } catch (error) {
+    console.error('ERRO NO BANCO:', error);
+
+    res.status(500).json({
+      banco: 'Erro ao conectar',
+      detalhes: error.message
     });
   }
 });
