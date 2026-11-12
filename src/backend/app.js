@@ -37,27 +37,6 @@ configurarSegurancaProdutos(autenticar, autorizarAdmin);
 
 // 3. Rotas da API
 app.get('/api/check', (_req, res) => res.status(200).json({ status: 'ok' }));
-
-
-app.get('/teste-banco', async (req, res) => {
-  try {
-    const resultado = await sql.query('SELECT NOW()');
-
-    res.json({
-      banco: 'Conectado com sucesso!',
-      horario: resultado.rows[0].now
-    });
-
-  } catch (error) {
-    console.error('ERRO NO BANCO:', error);
-
-    res.status(500).json({
-      banco: 'Erro ao conectar',
-      detalhes: error.message
-    });
-  }
-});
-
 app.use('/auth', authRouter);
 app.use('/api/produtos', produtoRouter);
 
