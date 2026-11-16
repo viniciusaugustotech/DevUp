@@ -25,7 +25,7 @@ Nosso objetivo é centralizar o portfólio de devs, a negociação e a entrega d
 
 Estamos na fase de validação das necessidades do nosso público-alvo para construir a melhor versão da aplicação.
 
-👉 **[Acesse aqui o Formulário de Pesquisa de Campo](https://docs.google.com/forms/d/e/1FAIpQLSe0rqbkXXVeFEuaurAmjiXHBxNLdP4w2cw1Clp8ppH1Y8dKSg/viewform?usp=sharing&ouid=111093462994891302828)**  
+👉 **[Acesse aqui o Formulário de Pesquisa de Campo](https://forms.gle/LmYbDzGPt7dw3qeE9)**  
 *(Leva menos de 3 minutos para responder e nos ajuda muito!)*
 
 * **Meta:** 100 respostas
