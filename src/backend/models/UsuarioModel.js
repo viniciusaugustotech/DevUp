@@ -18,7 +18,7 @@ export async function criar({
   cpf = null,
   cnpj = null,
   perfil = 'usuario',
-  nomePerfil = null,
+  nomePerfil,
   fotoPerfil = null
 }) {
   const sql = `
