@@ -1,4 +1,5 @@
 import { carregarAmbiente } from './config/ambiente.js';
+import 'dotenv/config';
 
 const config = carregarAmbiente('.env');
 

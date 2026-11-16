@@ -4,6 +4,7 @@ import cors from 'cors';
 import { resolve } from 'node:path';
 import { criarPool } from './config/database.js';
 
+import ClienteRoutes from './routes/ClienteRoutes.js';
 import { produtoRouter, configurarSegurancaProdutos } from './routes/ProdutoRoutes.js';
 import { authRouter } from './routes/AuthRoutes.js';
 import { autenticar, autorizarAdmin } from './middlewares/AuthMiddleware.js';
@@ -30,7 +31,9 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use("/api/marketplace", marketplaceRoutes);
+
+
+app.use("/api/marketplace", ClienteRoutes);
 app.use('/uploads', express.static(resolve('uploads')));
 
 // 2. Injeção de Segurança nas Rotas de Produtos

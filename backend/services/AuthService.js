@@ -83,12 +83,12 @@ export async function login({ email, senha } = {}) {
     : null;
 
     console.log('LOGIN DEBUG:', {
-  emailEncontrado: usuario,
-  senhaRecebida: typeof senha,
-  senhaExisteNoBanco: !!usuario?.senha,
-  hashValido: usuario?.senha?.startsWith('$2'),
-  tamanhoHash: usuario?.senha?.length
-});
+      emailEncontrado: usuario,
+      senhaRecebida: typeof senha,
+      senhaExisteNoBanco: !!usuario?.senha,
+      hashValido: usuario?.senha?.startsWith('$2'),
+      tamanhoHash: usuario?.senha?.length
+    });
 
 
   // const senhaValida = usuario && typeof usuario.senha === 'string'

@@ -1,7 +1,20 @@
-
 import React, { useEffect, useState } from "react";
 import "./cliente.css";
-import { marketplaceApi } from "../services/marketplaceApi";
+
+// Endereço do backend: ajuste se o seu servidor usar outra porta ou outro caminho
+const API_URL = "http://localhost:3000/api/marketplace";
+
+// Faz a requisição GET, lê o JSON e devolve só o campo "dados"
+async function buscarDados(caminho) {
+  const resposta = await fetch(`${API_URL}${caminho}`);
+  const json = await resposta.json();
+
+  if (!json.sucesso) {
+    throw new Error(json.erro || "Erro ao acessar a API");
+  }
+
+  return json.dados;
+}
 
 function Cliente() {
   const [desenvolvedores, setDesenvolvedores] = useState([]);
@@ -14,30 +27,24 @@ function Cliente() {
   const [erro, setErro] = useState("");
   const [menuAberto, setMenuAberto] = useState(false);
 
-  // Carregar os dados da API
+  // Carregar os dados da API ao abrir a página
   useEffect(() => {
     async function carregarDados() {
       try {
         setCarregando(true);
         setErro("");
 
-        const [
-          devs,
-          cats,
-          servs,
-          projs
-        ] = await Promise.all([
-          marketplaceApi.listarDesenvolvedores(),
-          marketplaceApi.listarCategorias(),
-          marketplaceApi.listarServicos(),
-          marketplaceApi.listarProjetos()
+        const [devs, cats, servs, projs] = await Promise.all([
+          buscarDados("/desenvolvedores"),
+          buscarDados("/categorias"),
+          buscarDados("/servicos"),
+          buscarDados("/projetos")
         ]);
 
         setDesenvolvedores(devs);
         setCategorias(cats);
         setServicos(servs);
         setProjetos(projs);
-
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
         setErro("Não foi possível carregar os dados.");
@@ -49,34 +56,23 @@ function Cliente() {
     carregarDados();
   }, []);
 
-  // Pesquisa na API
+  // Pesquisa na API (sem termo, a API devolve a lista completa)
   async function realizarBusca(event) {
     event.preventDefault();
 
     const termo = busca.trim();
+    const filtro = termo ? `?busca=${encodeURIComponent(termo)}` : "";
 
     try {
       setErro("");
 
-      if (!termo) {
-        const [devs, servs] = await Promise.all([
-          marketplaceApi.listarDesenvolvedores(),
-          marketplaceApi.listarServicos()
-        ]);
-
-        setDesenvolvedores(devs);
-        setServicos(servs);
-        return;
-      }
-
       const [devs, servs] = await Promise.all([
-        marketplaceApi.buscarDesenvolvedores(termo),
-        marketplaceApi.buscarServicos(termo)
+        buscarDados(`/desenvolvedores${filtro}`),
+        buscarDados(`/servicos${filtro}`)
       ]);
 
       setDesenvolvedores(devs);
       setServicos(servs);
-
     } catch (error) {
       console.error("Erro na pesquisa:", error);
       setErro("Erro ao realizar pesquisa.");
@@ -262,7 +258,7 @@ function Cliente() {
                 <p>{servico.descricao}</p>
 
                 <p>
-                  Desenvolvedor: {servico.nome_usuario}
+                  Desenvolvedor: {servico.nome_desenvolvedor}
                 </p>
 
                 <p>

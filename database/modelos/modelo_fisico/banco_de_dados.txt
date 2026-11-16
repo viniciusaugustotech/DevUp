@@ -1,0 +1,280 @@
+-- WARNING: This schema is for context only and is not meant to be run.
+-- Table order and constraints may not be valid for execution.
+
+CREATE TABLE public.usuario (
+  nome text NOT NULL,
+  email character varying NOT NULL UNIQUE,
+  senha character varying NOT NULL,
+  cpf character varying UNIQUE,
+  cnpj character varying UNIQUE,
+  data_cadastro timestamp with time zone NOT NULL DEFAULT now(),
+  ultimo_login timestamp with time zone,
+  id_usuario uuid NOT NULL DEFAULT gen_random_uuid(),
+  foto_perfil character varying,
+  telefone character varying NOT NULL,
+  perfil character varying NOT NULL DEFAULT 'usuario'::character varying CHECK (perfil::text = ANY (ARRAY['usuario'::character varying, 'administrador'::character varying]::text[])),
+  CONSTRAINT usuario_pkey PRIMARY KEY (id_usuario)
+);
+CREATE TABLE public.perfil_profissional (
+  area_atuacao text,
+  empresa text,
+  cargo text,
+  descricao text,
+  biografia text,
+  senioridade text CHECK (senioridade = ANY (ARRAY['Estágio'::text, 'Júnior / Nível inicial'::text, 'Pleno'::text, 'Sênior'::text, 'Diretor'::text, 'Executivo'::text, 'Não aplicável'::text])),
+  id_perfil uuid NOT NULL DEFAULT gen_random_uuid(),
+  id_usuario uuid NOT NULL UNIQUE,
+  CONSTRAINT perfil_profissional_pkey PRIMARY KEY (id_perfil),
+  CONSTRAINT perfil_profissional_id_usuario_fkey FOREIGN KEY (id_usuario) REFERENCES public.usuario(id_usuario)
+);
+CREATE TABLE public.preferencias (
+  idioma text,
+  moeda text,
+  tamanho_fonte text,
+  notificacoes_push boolean NOT NULL DEFAULT true,
+  notificacoes_email boolean NOT NULL DEFAULT true,
+  id_preferencia uuid NOT NULL DEFAULT gen_random_uuid(),
+  id_usuario uuid NOT NULL UNIQUE,
+  privacidade_perfil character varying,
+  fuso_horario character varying,
+  CONSTRAINT preferencias_pkey PRIMARY KEY (id_preferencia),
+  CONSTRAINT preferencias_id_usuario_fkey FOREIGN KEY (id_usuario) REFERENCES public.usuario(id_usuario)
+);
+CREATE TABLE public.experiencia (
+  cargo text NOT NULL,
+  data_inicio date NOT NULL,
+  data_fim date,
+  id_experiencia uuid NOT NULL DEFAULT gen_random_uuid(),
+  id_perfil uuid NOT NULL,
+  empresa text NOT NULL,
+  descricao text,
+  emprego_atual boolean NOT NULL DEFAULT false,
+  localizacao text,
+  CONSTRAINT experiencia_pkey PRIMARY KEY (id_experiencia),
+  CONSTRAINT experiencia_id_perfil_fkey FOREIGN KEY (id_perfil) REFERENCES public.perfil_profissional(id_perfil)
+);
+CREATE TABLE public.formacao_academica (
+  instituicao text NOT NULL,
+  curso text NOT NULL,
+  id_formacao uuid NOT NULL DEFAULT gen_random_uuid(),
+  id_perfil uuid NOT NULL,
+  grau text,
+  data_inicio date NOT NULL,
+  data_fim date,
+  atividades_sociedades text,
+  descricao text,
+  CONSTRAINT formacao_academica_pkey PRIMARY KEY (id_formacao),
+  CONSTRAINT formacao_id_usuario_fkey FOREIGN KEY (id_perfil) REFERENCES public.usuario(id_usuario),
+  CONSTRAINT formacao_academica_id_perfil_fkey FOREIGN KEY (id_perfil) REFERENCES public.perfil_profissional(id_perfil)
+);
+CREATE TABLE public.projeto (
+  data_publicacao timestamp with time zone NOT NULL DEFAULT now(),
+  titulo character varying NOT NULL,
+  descricao text,
+  repositorio_link character varying,
+  visibilidade character varying NOT NULL,
+  imagem_capa character varying,
+  id_usuario uuid NOT NULL,
+  id_projeto uuid NOT NULL DEFAULT gen_random_uuid(),
+  CONSTRAINT projeto_pkey PRIMARY KEY (id_projeto),
+  CONSTRAINT projeto_id_usuario_fkey FOREIGN KEY (id_usuario) REFERENCES public.usuario(id_usuario)
+);
+CREATE TABLE public.postagem (
+  id_post uuid NOT NULL DEFAULT gen_random_uuid(),
+  titulo text NOT NULL,
+  data_publicacao timestamp with time zone NOT NULL DEFAULT now(),
+  conteudo text NOT NULL,
+  status text NOT NULL,
+  id_usuario uuid NOT NULL,
+  CONSTRAINT postagem_pkey PRIMARY KEY (id_post),
+  CONSTRAINT postagem_id_usuario_fkey FOREIGN KEY (id_usuario) REFERENCES public.usuario(id_usuario)
+);
+CREATE TABLE public.curtida (
+  id_curtida uuid NOT NULL DEFAULT gen_random_uuid(),
+  data_hora timestamp with time zone NOT NULL DEFAULT now(),
+  tipo_reacao text NOT NULL DEFAULT 'like'::text,
+  id_usuario uuid NOT NULL,
+  id_post uuid,
+  CONSTRAINT curtida_pkey PRIMARY KEY (id_curtida),
+  CONSTRAINT curtida_id_usuario_fkey FOREIGN KEY (id_usuario) REFERENCES public.usuario(id_usuario),
+  CONSTRAINT curtida_id_post_fkey FOREIGN KEY (id_post) REFERENCES public.postagem(id_post)
+);
+CREATE TABLE public.avaliacoes (
+  id_avaliacao uuid NOT NULL DEFAULT gen_random_uuid(),
+  data_hora timestamp with time zone NOT NULL DEFAULT now(),
+  id_autor uuid NOT NULL,
+  id_servico uuid,
+  id_projeto uuid,
+  id_usuario_avaliado uuid,
+  id_comentario uuid,
+  nota integer NOT NULL,
+  CONSTRAINT avaliacoes_pkey PRIMARY KEY (id_avaliacao),
+  CONSTRAINT avaliacoes_id_servico_fkey FOREIGN KEY (id_servico) REFERENCES public.servico(id_servico),
+  CONSTRAINT avaliacoes_id_autor_fkey FOREIGN KEY (id_autor) REFERENCES public.usuario(id_usuario),
+  CONSTRAINT avaliacoes_id_usuario_avaliado_fkey FOREIGN KEY (id_usuario_avaliado) REFERENCES public.usuario(id_usuario),
+  CONSTRAINT avaliacoes_id_projeto_fkey FOREIGN KEY (id_projeto) REFERENCES public.projeto(id_projeto)
+);
+CREATE TABLE public.servico (
+  id_usuario uuid NOT NULL,
+  data_hora timestamp with time zone NOT NULL DEFAULT now(),
+  categoria text,
+  descricao text,
+  prazo_entrega text,
+  tipo_cobranca text,
+  preco numeric NOT NULL,
+  disponibilidade boolean,
+  id_servico uuid NOT NULL DEFAULT gen_random_uuid(),
+  CONSTRAINT servico_pkey PRIMARY KEY (id_servico),
+  CONSTRAINT servico_id_usuario_fkey FOREIGN KEY (id_usuario) REFERENCES public.usuario(id_usuario)
+);
+CREATE TABLE public.transacao (
+  status text NOT NULL DEFAULT 'pendente'::text,
+  valor_total numeric NOT NULL,
+  data_hora timestamp with time zone NOT NULL DEFAULT now(),
+  id_usuario uuid NOT NULL,
+  id_servico uuid,
+  id_template uuid,
+  id_transacao uuid NOT NULL DEFAULT gen_random_uuid(),
+  CONSTRAINT transacao_pkey PRIMARY KEY (id_transacao),
+  CONSTRAINT transacao_id_usuario_fkey FOREIGN KEY (id_usuario) REFERENCES public.usuario(id_usuario),
+  CONSTRAINT transacao_id_servico_fkey FOREIGN KEY (id_servico) REFERENCES public.servico(id_servico),
+  CONSTRAINT transacao_id_template_fkey FOREIGN KEY (id_template) REFERENCES public.template(id_template)
+);
+CREATE TABLE public.template (
+  id_template uuid NOT NULL DEFAULT gen_random_uuid(),
+  titulo text NOT NULL,
+  descricao text,
+  data_hora timestamp with time zone NOT NULL DEFAULT now(),
+  preco numeric NOT NULL,
+  status text NOT NULL,
+  id_usuario uuid NOT NULL,
+  CONSTRAINT template_pkey PRIMARY KEY (id_template),
+  CONSTRAINT template_id_usuario_fkey FOREIGN KEY (id_usuario) REFERENCES public.usuario(id_usuario)
+);
+CREATE TABLE public.pagamento (
+  id_pagamento uuid NOT NULL DEFAULT gen_random_uuid(),
+  status text NOT NULL DEFAULT 'pendente'::text,
+  valor_pago numeric NOT NULL,
+  metodo text NOT NULL,
+  data_vencimento date,
+  data_hora timestamp with time zone,
+  id_transacao uuid NOT NULL,
+  CONSTRAINT pagamento_pkey PRIMARY KEY (id_pagamento),
+  CONSTRAINT pagamento_id_transacao_fkey FOREIGN KEY (id_transacao) REFERENCES public.transacao(id_transacao)
+);
+CREATE TABLE public.tag (
+  id_tag uuid NOT NULL DEFAULT gen_random_uuid(),
+  titulo text NOT NULL,
+  descricao text,
+  data_hora timestamp with time zone NOT NULL DEFAULT now(),
+  id_criador uuid NOT NULL,
+  id_template uuid,
+  id_usuario uuid,
+  CONSTRAINT tag_pkey PRIMARY KEY (id_tag),
+  CONSTRAINT tag_id_criador_fkey FOREIGN KEY (id_criador) REFERENCES public.usuario(id_usuario),
+  CONSTRAINT tag_id_template_fkey FOREIGN KEY (id_template) REFERENCES public.template(id_template),
+  CONSTRAINT tag_id_usuario_fkey FOREIGN KEY (id_usuario) REFERENCES public.usuario(id_usuario)
+);
+CREATE TABLE public.categoria (
+  id_categoria uuid NOT NULL DEFAULT gen_random_uuid(),
+  nome text NOT NULL,
+  data_hora timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT categoria_pkey PRIMARY KEY (id_categoria)
+);
+CREATE TABLE public.tecnologia (
+  id_tecnologia uuid NOT NULL DEFAULT gen_random_uuid(),
+  nome text NOT NULL,
+  data_hora timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT tecnologia_pkey PRIMARY KEY (id_tecnologia)
+);
+CREATE TABLE public.projeto_tecnologia (
+  id_projeto uuid NOT NULL,
+  id_tecnologia uuid NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT projeto_tecnologia_pkey PRIMARY KEY (id_projeto, id_tecnologia),
+  CONSTRAINT projeto_tecnologia_id_tecnologia_fkey FOREIGN KEY (id_tecnologia) REFERENCES public.tecnologia(id_tecnologia),
+  CONSTRAINT projeto_tecnologia_id_projeto_fkey FOREIGN KEY (id_projeto) REFERENCES public.projeto(id_projeto)
+);
+CREATE TABLE public.template_tecnologia (
+  id_template uuid NOT NULL,
+  id_tecnologia uuid NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT template_tecnologia_pkey PRIMARY KEY (id_template, id_tecnologia),
+  CONSTRAINT template_tecnologia_id_template_fkey FOREIGN KEY (id_template) REFERENCES public.template(id_template),
+  CONSTRAINT template_tecnologia_id_tecnologia_fkey FOREIGN KEY (id_tecnologia) REFERENCES public.tecnologia(id_tecnologia)
+);
+CREATE TABLE public.usuario_tecnologia (
+  id_usuario uuid NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  id_tecnologia uuid NOT NULL,
+  CONSTRAINT usuario_tecnologia_pkey PRIMARY KEY (id_usuario, id_tecnologia),
+  CONSTRAINT usuario_tecnologia_id_tecnologia_fkey FOREIGN KEY (id_tecnologia) REFERENCES public.tecnologia(id_tecnologia),
+  CONSTRAINT usuario_tecnologia_id_usuario_fkey FOREIGN KEY (id_usuario) REFERENCES public.usuario(id_usuario)
+);
+CREATE TABLE public.projeto_tag (
+  id_projeto uuid NOT NULL,
+  id_tag uuid NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT projeto_tag_pkey PRIMARY KEY (id_projeto, id_tag),
+  CONSTRAINT projeto_tag_id_tag_fkey FOREIGN KEY (id_tag) REFERENCES public.tag(id_tag),
+  CONSTRAINT projeto_tag_id_projeto_fkey FOREIGN KEY (id_projeto) REFERENCES public.projeto(id_projeto)
+);
+CREATE TABLE public.postagem_categoria (
+  id_post uuid NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  id_categoria uuid NOT NULL,
+  CONSTRAINT postagem_categoria_pkey PRIMARY KEY (id_post, id_categoria),
+  CONSTRAINT postagem_categoria_id_post_fkey FOREIGN KEY (id_post) REFERENCES public.postagem(id_post),
+  CONSTRAINT postagem_categoria_id_categoria_fkey FOREIGN KEY (id_categoria) REFERENCES public.categoria(id_categoria)
+);
+CREATE TABLE public.projeto_categoria (
+  id_projeto uuid NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  id_categoria uuid NOT NULL,
+  CONSTRAINT projeto_categoria_pkey PRIMARY KEY (id_projeto, id_categoria),
+  CONSTRAINT projeto_categoria_id_projeto_fkey FOREIGN KEY (id_projeto) REFERENCES public.projeto(id_projeto),
+  CONSTRAINT projeto_categoria_id_categoria_fkey FOREIGN KEY (id_categoria) REFERENCES public.categoria(id_categoria)
+);
+CREATE TABLE public.midia_postagem (
+  id_midia uuid NOT NULL DEFAULT gen_random_uuid(),
+  id_post uuid NOT NULL,
+  url_foto text NOT NULL,
+  ordem integer NOT NULL DEFAULT 1,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT midia_postagem_pkey PRIMARY KEY (id_midia),
+  CONSTRAINT midia_postagem_id_post_fkey FOREIGN KEY (id_post) REFERENCES public.postagem(id_post)
+);
+CREATE TABLE public.servico_tecnologia (
+  id_servico uuid NOT NULL,
+  id_tecnologia uuid NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT servico_tecnologia_pkey PRIMARY KEY (id_servico, id_tecnologia),
+  CONSTRAINT fk_servico_tecnologia_servico FOREIGN KEY (id_servico) REFERENCES public.servico(id_servico),
+  CONSTRAINT fk_servico_tecnologia_tecnologia FOREIGN KEY (id_tecnologia) REFERENCES public.tecnologia(id_tecnologia)
+);
+CREATE TABLE public.comentario (
+  id_comentario uuid NOT NULL DEFAULT gen_random_uuid(),
+  id_usuario uuid NOT NULL,
+  id_post uuid,
+  id_projeto uuid,
+  id_avaliacao uuid,
+  id_usuario_destino uuid,
+  comentario character varying NOT NULL,
+  data_hora timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT comentario_pkey PRIMARY KEY (id_comentario),
+  CONSTRAINT fk_comentario_usuario FOREIGN KEY (id_usuario) REFERENCES public.usuario(id_usuario),
+  CONSTRAINT fk_comentario_post FOREIGN KEY (id_post) REFERENCES public.postagem(id_post),
+  CONSTRAINT fk_comentario_projeto FOREIGN KEY (id_projeto) REFERENCES public.projeto(id_projeto),
+  CONSTRAINT fk_comentario_avaliacao FOREIGN KEY (id_avaliacao) REFERENCES public.avaliacoes(id_avaliacao),
+  CONSTRAINT fk_comentario_usuario_destino FOREIGN KEY (id_usuario_destino) REFERENCES public.usuario(id_usuario)
+);
+CREATE TABLE public.postagem_imagem (
+  id_imagem uuid NOT NULL DEFAULT gen_random_uuid(),
+  id_post uuid NOT NULL,
+  url_imagem character varying NOT NULL,
+  ordem integer,
+  legenda character varying,
+  data_criacao timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT postagem_imagem_pkey PRIMARY KEY (id_imagem),
+  CONSTRAINT fk_postagem_imagem_post FOREIGN KEY (id_post) REFERENCES public.postagem(id_post)
+);

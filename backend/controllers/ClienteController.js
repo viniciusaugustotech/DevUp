@@ -1,4 +1,4 @@
-import * as marketplaceService from '../services/marketplaceService.js';
+import * as ClienteService from '../services/ClienteService.js';
 
 function responderErro(erro, res, next) {
   if (erro instanceof TypeError) {

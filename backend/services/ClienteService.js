@@ -1,4 +1,4 @@
-import * as marketplaceModel from '../models/marketplaceModel.js';
+import * as ClienteModel from '../models/ClienteModel.js';
 
 export async function listarDesenvolvedores() {
   return await marketplaceModel.listarDesenvolvedores();
