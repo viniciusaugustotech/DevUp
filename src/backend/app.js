@@ -30,6 +30,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use("/api/marketplace", marketplaceRoutes);
 app.use('/uploads', express.static(resolve('uploads')));
 
 // 2. Injeção de Segurança nas Rotas de Produtos
