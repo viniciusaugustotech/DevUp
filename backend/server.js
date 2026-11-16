@@ -1,11 +1,10 @@
-import { carregarAmbiente } from './config/ambiente.js';
 import 'dotenv/config';
 
 const { app } = await import('./app.js');
 const { criarPool } = await import('./config/database.js');
 
 const pool = criarPool();
-const porta = config.porta || 3000;
+const porta = process.env.PORTA|| 8080;
 
 async function iniciarServidor() {
     try {

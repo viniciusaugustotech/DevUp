@@ -1,6 +1,10 @@
 -- WARNING: This schema is for context only and is not meant to be run.
 -- Table order and constraints may not be valid for execution.
 
+-- TESTE
+
+-- email: mariana.costa@dev.com
+-- senha: Senha@123
 
 
 CREATE TABLE public.usuario (

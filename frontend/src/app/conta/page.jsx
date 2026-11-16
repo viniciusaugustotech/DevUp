@@ -12,7 +12,7 @@ export default function ContaPage() {
       <header class="client-navbar">
         <div class="container nav-inner">
           <Link href="/cliente" class="nav-brand" aria-label="DevUp Marketplace">
-            <img src="/logo.png" alt="DevUp" class="nav-logo-img" />
+            <img src="/imagens/logo.png" alt="DevUp" class="nav-logo-img" />
           </Link>
 
           <div class="search-wrapper">

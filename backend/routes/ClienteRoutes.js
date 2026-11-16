@@ -3,9 +3,9 @@ import * as ClienteController from '../controllers/ClienteController.js';
 
 const router = Router();
 
-router.get('/desenvolvedores', marketplaceController.listarDesenvolvedores);
-router.get('/categorias', marketplaceController.listarCategorias);
-router.get('/servicos', marketplaceController.listarServicos);
-router.get('/projetos', marketplaceController.listarProjetos);
+router.get('/desenvolvedores', ClienteController.listarDesenvolvedores);
+router.get('/categorias', ClienteController.listarCategorias);
+router.get('/servicos', ClienteController.listarServicos);
+router.get('/projetos', ClienteController.listarProjetos);
 
 export default router;
