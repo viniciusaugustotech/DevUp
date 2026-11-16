@@ -1,41 +1,37 @@
-import marketplaceModel from "../models/marketplaceModel.js";
+import * as marketplaceModel from '../models/marketplaceModel.js';
 
-class MarketplaceService {
-  async listarDesenvolvedores() {
-    return await marketplaceModel.listarDesenvolvedores();
-  }
-
-  async buscarDesenvolvedores(termo) {
-    const busca = termo?.trim();
-
-    if (!busca) {
-      return this.listarDesenvolvedores();
-    }
-
-    return await marketplaceModel.buscarDesenvolvedores(busca);
-  }
-
-  async listarCategorias() {
-    return await marketplaceModel.listarCategorias();
-  }
-
-  async listarServicos() {
-    return await marketplaceModel.listarServicos();
-  }
-
-  async buscarServicos(termo) {
-    const busca = termo?.trim();
-
-    if (!busca) {
-      return this.listarServicos();
-    }
-
-    return await marketplaceModel.buscarServicos(busca);
-  }
-
-  async listarProjetos() {
-    return await marketplaceModel.listarProjetos();
-  }
+export async function listarDesenvolvedores() {
+  return await marketplaceModel.listarDesenvolvedores();
 }
 
-export default new MarketplaceService();
+export async function buscarDesenvolvedores(termo) {
+  const busca = termo?.trim();
+
+  if (!busca) {
+    return await listarDesenvolvedores();
+  }
+
+  return await marketplaceModel.buscarDesenvolvedores(busca);
+}
+
+export async function listarCategorias() {
+  return await marketplaceModel.listarCategorias();
+}
+
+export async function listarServicos() {
+  return await marketplaceModel.listarServicos();
+}
+
+export async function buscarServicos(termo) {
+  const busca = termo?.trim();
+
+  if (!busca) {
+    return await listarServicos();
+  }
+
+  return await marketplaceModel.buscarServicos(busca);
+}
+
+export async function listarProjetos() {
+  return await marketplaceModel.listarProjetos();
+}
