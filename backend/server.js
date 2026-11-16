@@ -1,8 +1,6 @@
 import { carregarAmbiente } from './config/ambiente.js';
 import 'dotenv/config';
 
-const config = carregarAmbiente('.env');
-
 const { app } = await import('./app.js');
 const { criarPool } = await import('./config/database.js');
 

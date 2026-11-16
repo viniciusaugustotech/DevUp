@@ -4,6 +4,7 @@ import cors from 'cors';
 import { resolve } from 'node:path';
 import { criarPool } from './config/database.js';
 
+import healthRoutes from './routes/healthRoutes.js';
 import ClienteRoutes from './routes/ClienteRoutes.js';
 import { produtoRouter, configurarSegurancaProdutos } from './routes/ProdutoRoutes.js';
 import { authRouter } from './routes/AuthRoutes.js';
@@ -33,6 +34,7 @@ app.use(cors({
 app.use(express.json());
 
 
+app.use("/api/health", healthRoutes);
 app.use("/api/marketplace", ClienteRoutes);
 app.use('/uploads', express.static(resolve('uploads')));
 
