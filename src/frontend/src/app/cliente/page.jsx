@@ -1,22 +1,104 @@
-import React from "react";
+
+import React, { useEffect, useState } from "react";
 import "./cliente.css";
+import { marketplaceApi } from "../services/marketplaceApi";
 
 function Cliente() {
+  const [desenvolvedores, setDesenvolvedores] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [servicos, setServicos] = useState([]);
+  const [projetos, setProjetos] = useState([]);
+
+  const [busca, setBusca] = useState("");
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState("");
+  const [menuAberto, setMenuAberto] = useState(false);
+
+  // Carregar os dados da API
+  useEffect(() => {
+    async function carregarDados() {
+      try {
+        setCarregando(true);
+        setErro("");
+
+        const [
+          devs,
+          cats,
+          servs,
+          projs
+        ] = await Promise.all([
+          marketplaceApi.listarDesenvolvedores(),
+          marketplaceApi.listarCategorias(),
+          marketplaceApi.listarServicos(),
+          marketplaceApi.listarProjetos()
+        ]);
+
+        setDesenvolvedores(devs);
+        setCategorias(cats);
+        setServicos(servs);
+        setProjetos(projs);
+
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
+        setErro("Não foi possível carregar os dados.");
+      } finally {
+        setCarregando(false);
+      }
+    }
+
+    carregarDados();
+  }, []);
+
+  // Pesquisa na API
+  async function realizarBusca(event) {
+    event.preventDefault();
+
+    const termo = busca.trim();
+
+    try {
+      setErro("");
+
+      if (!termo) {
+        const [devs, servs] = await Promise.all([
+          marketplaceApi.listarDesenvolvedores(),
+          marketplaceApi.listarServicos()
+        ]);
+
+        setDesenvolvedores(devs);
+        setServicos(servs);
+        return;
+      }
+
+      const [devs, servs] = await Promise.all([
+        marketplaceApi.buscarDesenvolvedores(termo),
+        marketplaceApi.buscarServicos(termo)
+      ]);
+
+      setDesenvolvedores(devs);
+      setServicos(servs);
+
+    } catch (error) {
+      console.error("Erro na pesquisa:", error);
+      setErro("Erro ao realizar pesquisa.");
+    }
+  }
+
   return (
     <>
       {/* NAVBAR */}
       <header className="client-navbar">
         <div className="container nav-inner">
-          <a href="index.html" className="nav-brand" aria-label="DevUp Home">
+
+          <a href="/" className="nav-brand" aria-label="DevUp Home">
             <img
-              src="logo.png"
+              src="/logo.png"
               alt="DevUp"
               className="nav-logo-img"
             />
           </a>
 
           <div className="search-wrapper">
-            <div className="search-box">
+            <form className="search-box" onSubmit={realizarBusca}>
               <svg
                 className="search-icon"
                 viewBox="0 0 24 24"
@@ -34,11 +116,17 @@ function Cliente() {
                 type="text"
                 className="search-input"
                 placeholder="Pesquise por Anúncio, Usuário ou Categoria"
+                value={busca}
+                onChange={(event) => setBusca(event.target.value)}
               />
-            </div>
+
+              <button type="submit">
+                Buscar
+              </button>
+            </form>
           </div>
 
-          <nav className="nav-actions">
+          <nav className={`nav-actions ${menuAberto ? "menu-aberto" : ""}`}>
             <a href="#categorias" className="nav-item">
               Categorias
             </a>
@@ -48,7 +136,7 @@ function Cliente() {
             </a>
 
             <a
-              href="conta.html"
+              href="/conta"
               className="avatar-circle"
               aria-label="Conta do Usuário"
             >
@@ -66,30 +154,37 @@ function Cliente() {
                 <circle cx="12" cy="7" r="4" />
               </svg>
             </a>
-
-            <button className="menu-toggle-btn" aria-label="Abrir menu">
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="3" y1="12" x2="21" y2="12" />
-                <line x1="3" y1="6" x2="21" y2="6" />
-                <line x1="3" y1="18" x2="21" y2="18" />
-              </svg>
-            </button>
           </nav>
+
+          <button
+            className="menu-toggle-btn"
+            aria-label="Abrir menu"
+            aria-expanded={menuAberto}
+            onClick={() => setMenuAberto(!menuAberto)}
+          >
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+
         </div>
       </header>
 
       {/* HERO */}
       <section className="hero-marketplace">
         <div className="container hero-grid">
+
           <div className="hero-left">
             <h1 className="hero-title-main">
               Compre e<br />
@@ -98,11 +193,11 @@ function Cliente() {
             </h1>
 
             <div className="hero-btn-group">
-              <a href="#" className="btn-vendedor">
+              <a href="/cadastro-vendedor" className="btn-vendedor">
                 Torne-se um Vendedor
               </a>
 
-              <a href="#" className="btn-comprar">
+              <a href="#servicos" className="btn-comprar">
                 Comprar
               </a>
             </div>
@@ -111,19 +206,167 @@ function Cliente() {
           <div className="hero-right">
             <div className="hero-card-img">
               <img
-                src="hero_cliente.png"
+                src="/hero_cliente.png"
                 alt="Desenvolvedores escalando gráfico de crescimento"
               />
             </div>
           </div>
+
         </div>
       </section>
 
-      {/* 
-        Continue aqui com as demais seções do HTML,
-        seguindo as mesmas conversões para JSX.
-      */}
+      {/* CARREGAMENTO E ERROS */}
+      {carregando && (
+        <p>Carregando marketplace...</p>
+      )}
 
+      {erro && (
+        <p className="mensagem-erro">{erro}</p>
+      )}
+
+      {/* CATEGORIAS */}
+      <section className="marketplace-section" id="categorias">
+        <div className="container">
+          <h2>Categorias</h2>
+
+          <div className="categorias-container">
+            {categorias.map((categoria) => (
+              <article
+                className="categoria-card"
+                key={categoria.id_categoria}
+              >
+                <h3>{categoria.nome}</h3>
+              </article>
+            ))}
+          </div>
+
+          {!carregando && categorias.length === 0 && (
+            <p>Nenhuma categoria encontrada.</p>
+          )}
+        </div>
+      </section>
+
+      {/* SERVIÇOS */}
+      <section className="marketplace-section" id="servicos">
+        <div className="container">
+          <h2>Serviços disponíveis</h2>
+
+          <div className="servicos-container">
+            {servicos.map((servico) => (
+              <article
+                className="servico-card"
+                key={servico.id_servico}
+              >
+                <h3>{servico.categoria}</h3>
+
+                <p>{servico.descricao}</p>
+
+                <p>
+                  Desenvolvedor: {servico.nome_usuario}
+                </p>
+
+                <p>
+                  Preço: R$ {Number(servico.preco).toFixed(2)}
+                </p>
+
+                <p>
+                  Prazo: {servico.prazo_entrega || "A combinar"}
+                </p>
+              </article>
+            ))}
+          </div>
+
+          {!carregando && servicos.length === 0 && (
+            <p>Nenhum serviço encontrado.</p>
+          )}
+        </div>
+      </section>
+
+      {/* DESENVOLVEDORES */}
+      <section className="marketplace-section" id="desenvolvedores">
+        <div className="container">
+          <h2>Desenvolvedores</h2>
+
+          <div className="desenvolvedores-container">
+            {desenvolvedores.map((dev) => (
+              <article
+                className="desenvolvedor-card"
+                key={dev.id_usuario}
+              >
+                <img
+                  src={dev.foto_perfil || "/avatar-padrao.png"}
+                  alt={dev.nome}
+                  className="desenvolvedor-avatar"
+                />
+
+                <h3>{dev.nome}</h3>
+
+                <p>{dev.area_atuacao}</p>
+
+                <p>{dev.cargo}</p>
+
+                <p>{dev.descricao}</p>
+
+                <span>{dev.senioridade}</span>
+              </article>
+            ))}
+          </div>
+
+          {!carregando && desenvolvedores.length === 0 && (
+            <p>Nenhum desenvolvedor encontrado.</p>
+          )}
+        </div>
+      </section>
+
+      {/* PROJETOS */}
+      <section className="marketplace-section" id="projetos">
+        <div className="container">
+          <h2>Projetos em destaque</h2>
+
+          <div className="projetos-container">
+            {projetos.map((projeto) => (
+              <article
+                className="projeto-card"
+                key={projeto.id_projeto}
+              >
+                {projeto.imagem_capa && (
+                  <img
+                    src={projeto.imagem_capa}
+                    alt={projeto.titulo}
+                    className="projeto-imagem"
+                  />
+                )}
+
+                <h3>{projeto.titulo}</h3>
+
+                <p>{projeto.descricao}</p>
+
+                {projeto.repositorio_link && (
+                  <a
+                    href={projeto.repositorio_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Ver repositório
+                  </a>
+                )}
+              </article>
+            ))}
+          </div>
+
+          {!carregando && projetos.length === 0 && (
+            <p>Nenhum projeto encontrado.</p>
+          )}
+        </div>
+      </section>
+
+      {/* BLOG */}
+      <section className="marketplace-section" id="blog">
+        <div className="container">
+          <h2>Blog DevUp</h2>
+          <p>Confira as novidades da comunidade DevUp.</p>
+        </div>
+      </section>
     </>
   );
 }
