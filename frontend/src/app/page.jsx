@@ -17,7 +17,7 @@ export default function HomePage() {
             <Link href="#seguranca" className="nav-link">Segurança</Link>
           </nav>
           <div className="nav-action">
-            <Link href="/login" className="btn-entrar">Entrar</Link>
+            <Link href="/auth/login" className="btn-entrar">Entrar</Link>
           </div>
         </div>
       </header>

@@ -33,9 +33,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div class="auth-wrapper">
+    <div className="auth-wrapper">
       {/* Botão de Voltar para a Home */}
-      <Link href="/" class="back-btn" aria-label="Voltar para a página inicial">
+      <Link href="/" className="back-btn" aria-label="Voltar para a página inicial">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <line x1="19" y1="12" x2="5" y2="12"></line>
           <polyline points="12 19 5 12 12 5"></polyline>
@@ -43,17 +43,17 @@ export default function LoginPage() {
       </Link>
 
       {/* Card Principal de Login */}
-      <div class="auth-wrapper">
-        <main class="auth-card">
-          <header class="card-header">
-            <img src="/logo.png" alt="DevUp Logo" class="auth-logo" />
-            <h1 class="card-title">Faça login no DevUp</h1>
-            <p class="card-subtitle">Faça login para acessar sua conta e usar todos os recursos</p>
+      <div className="auth-wrapper">
+        <main className="auth-card">
+          <header className="card-header">
+            <img src="/imagens/logo.png" alt="DevUp Logo" className="auth-logo" />
+            <h1 className="card-title">Faça login no DevUp</h1>
+            <p className="card-subtitle">Faça login para acessar sua conta e usar todos os recursos</p>
           </header>
 
           {/* Botão Google */}
-          <button type="button" class="btn-google">
-            <svg class="google-icon" viewBox="0 0 24 24">
+          <button type="button" className="btn-google">
+            <svg className="google-icon" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
               <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
@@ -63,17 +63,17 @@ export default function LoginPage() {
           </button>
 
           {/* Divisor "ou" */}
-          <div class="auth-divider">ou</div>
+          <div className="auth-divider">ou</div>
 
           {/* Formulário de Login */}
-          <form class="auth-form" onSubmit={handleSubmit}>
-            <div class="form-group">
-              <label class="form-label" htmlFor="email">Email</label>
+          <form className="auth-form" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label className="form-label" htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                class="form-input"
+                className="form-input"
                 placeholder="email@gmail.com"
                 required
                 autoComplete="email"
@@ -82,16 +82,16 @@ export default function LoginPage() {
               />
             </div>
 
-            <div class="form-group">
-              <div class="label-row">
-                <label class="form-label" htmlFor="password">Senha</label>
-                <Link href="#" class="forgot-link">Esqueceu a senha?</Link>
+            <div className="form-group">
+              <div className="label-row">
+                <label className="form-label" htmlFor="password">Senha</label>
+                <Link href="#" className="forgot-link">Esqueceu a senha?</Link>
               </div>
               <input
                 type="password"
                 id="password"
                 name="password"
-                class="form-input"
+                className="form-input"
                 placeholder="• • • • • •"
                 required
                 autoComplete="current-password"
@@ -100,8 +100,8 @@ export default function LoginPage() {
               />
             </div>
 
-            <button type="submit" class="btn-submit">
-              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <button type="submit" className="btn-submit">
+              <svg className="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect width="20" height="16" x="2" y="4" rx="2" />
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
               </svg>
@@ -110,13 +110,13 @@ export default function LoginPage() {
           </form>
 
           {/* Rodapé do Card */}
-          <p class="auth-terms">
+          <p className="auth-terms">
             Ao iniciar sessão, você concorda com nossos<br />
             Termos de Serviço e Política de Privacidade.
           </p>
 
-          <p class="auth-switch">
-            Caso não tenha login, clique em <Link href="/cadastro">Criar Conta</Link>
+          <p className="auth-switch">
+            Caso não tenha login, clique em <Link href="/auth/cadastro">Criar Conta</Link>
           </p>
         </main>
       </div>

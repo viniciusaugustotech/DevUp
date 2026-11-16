@@ -29,7 +29,7 @@ body {
   font-family: var(--font-family);
   min-height: 100vh;
   width: 100%;
-  background: #f4f5f7 url('Remove_the_image_from_the_20260919140819.jpeg') center center / cover no-repeat fixed;
+  background: #f4f5f7 url('/imagens/Remove_the_image_from_the_20260919140819.jpeg') center center / cover no-repeat fixed;
   color: var(--color-text-main);
   display: flex;
   align-items: center;
@@ -87,6 +87,14 @@ body {
   border: 1px solid rgba(229, 231, 235, 0.8);
   width: 100%;
   animation: fadeInCard 0.35s ease-out;
+}
+
+.auth-card .card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 22px;
 }
 
 @keyframes fadeInCard {
